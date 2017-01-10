@@ -1,8 +1,0 @@
-Django 1.10 版本的時候再csrf尚有比較大的限制
-之前使用{% csrf_token %} + render_context 的方法已經沒辦法通過csrf
-之後改成以下寫法
-    return render(request, 'login.html',locals())
-才成功通過驗證
-
-http://www.cnblogs.com/Rocky_/p/6140362.html
-之後可以參考這篇
