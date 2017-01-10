@@ -7,3 +7,10 @@
 
     http://www.cnblogs.com/Rocky_/p/6140362.html
     之後可以參考這篇
+
+2.透過django-registration 可以快速做到基本註冊跟認證
+    但因為registration的form 跟 view 是寫死的 
+    要客製化的話需要繼承class 
+    或是直接import 重新寫
+    這樣子速度不會比叫快
+    但是因為有認證信功能可以達成不錯的認證效果
