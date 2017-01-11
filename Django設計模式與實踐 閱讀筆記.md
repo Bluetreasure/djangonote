@@ -15,6 +15,7 @@
 +   有時過多的規範化不是個好選擇，在需要考慮效能的時候往往會因為串聯過多表讓查詢時間過久
 +   當有某些欄位需要在很多個classs裡面重複新增時，可以考慮增加abstract class讓其他class 可以繼承.
     例如當遇到需要在每個model增加修改時間跟新增時間以及新增人員的時候，可以透過下面方式去達成
+    ```python
     class Postable(models.Model):
         created = models.DateTimeField(auto_now_add=True)
         modified = modified.DateTimeField(auto_now=True)
@@ -24,3 +25,4 @@
             abstract = True
         class Post(Postable):
             ...
+    ```
