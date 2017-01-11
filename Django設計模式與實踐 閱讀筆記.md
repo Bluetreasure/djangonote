@@ -6,7 +6,7 @@
     
 #模型
 
-    * 分割models.py,透過新增一個models資料夾model分割成多個檔案,在 __init__.py 維護from .... import ...
+    * 分割models.py,透過新增一個models資料夾model分割成多個檔案,在 __init__.py 維護from  import 
     * 設計models須將模型正規化
       正規化大致分為三個
       (1)避免同一個欄位出現多個值，每個表都要有Key
