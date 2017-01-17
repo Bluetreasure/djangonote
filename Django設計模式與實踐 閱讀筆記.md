@@ -25,3 +25,17 @@ class Postable(models.Model):
 class Post(Postable):
     ...
 ```
++   在建立models.py時可以把models.py 改完一個dir models
++   透過init 把每一個model獨立寫成一個py檔
+```python
+'''__init__.py'''
+    from postable import Postable
+    from post import Post
+    from commnet import Comment
+```
++   針對django 內建 user model ,當想要擴展時會使用one_to_one_去擴展
++   例如：
+```python
+class Profile(models.Model):
+    user = models.OnToOneField(settings.AUTH_USER_MODEL, primary_key=True)
+```
