@@ -39,3 +39,63 @@ class Post(Postable):
 class Profile(models.Model):
     user = models.OnToOneField(settings.AUTH_USER_MODEL, primary_key=True)
 ```
++   針對user model 的延伸，往往會需要因為user 的新增或刪除，去對延伸的Table做異動
++   此時可以使用signal根據model傳出的信號，去做異動．
+
++   在使用user model 延伸時，在admin通常使用inline方式去實現，讓用戶profile與user放在一起
+```python
+from django.contrib import admin
+from .models import Profile
+from django.contrib.auth.models import User
+
+
+class UserProfileInline(admin.StackedInline):
+    model = Profile
+
+
+class UserAdmin(admin.UserAdmin):
+    inlines = [UserProfileInline]
+
+
+admin.site.unregister(User)
+admin.site.register(User, UserAdmin)
+```
+
++   當同一用戶有不同帳戶類型時
++   例如：男生/女生 分別要紀錄不同的資料
++   可以使用抽象class達成用戶類型的共用
+```python
+class BaseProfile(models.Model):
+    USER_TYPES = (
+        (0, 'Ordinary'),
+        (1, 'SuperHero'),
+    )
+
+    user = models.OnToOneField(settings.AUTH_USER_MODEL, primary_key=True)
+    user_type = models.IntegerField(max_length=1, null=True,    choices=USER_TYPES)
+    bio = models.CharField(max_length=200, blank=True, null=True)
+
+    def __str__(self):
+        return "{}:{:.20}".format(self.user, self.bio or "")
+
+    class Meta:
+        abstract = True
+
+
+class SuperHeroProfile(models.Model):
+    origin = models.CharField(max_length=100, blank=True, null=True)
+
+    class Meta:
+        abstract = True
+
+
+class OrdinaryProfile(models.Model):
+    address = models.CharField(max_length=200, blank=True, null=True)
+
+    class Meta:
+        abstract = True
+
+
+class Profile(SuperHeroProfile, OrdinaryProfile, BaseProfile):
+    pass
+```
