@@ -135,3 +135,34 @@ class Blog(models.Model):
         else:
             super(Blog, self).save(*args, **kwargs) # Call the "real" save() method.
 ```
+
++   abstract class 可以避免一直重複寫入某欄位
+```
+from django.db import models
+
+class CommonInfo(models.Model):
+    name = models.CharField(max_length=100)
+    age = models.PositiveIntegerField()
+
+    class Meta:
+        abstract = True
+
+class Student(CommonInfo):
+    home_group = models.CharField(max_length=5)
+```
+
++   Meta繼承的擴充時可以透過以下方式進行
+```
+from django.db import models
+
+class CommonInfo(models.Model):
+    # ...
+    class Meta:
+        abstract = True
+        ordering = ['name']
+
+class Student(CommonInfo):
+    # ...
+    class Meta(CommonInfo.Meta):
+        db_table = 'student_info'
+```
