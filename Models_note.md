@@ -56,3 +56,38 @@ class Membership(models.Model):
 ```
 
 +   上面的例子就是透過Membership紀錄他們之間關係的原因
+
++   在一對一關係時,我們可以適用OneToOneField去針對某個Model做額外資訊Table的應用
+```
+from django.db import models
+
+class Place(models.Model):
+    name = models.CharField(max_length=50)
+    address = models.CharField(max_length=80)
+
+    def __str__(self):              # __unicode__ on Python 2
+        return "%s the place" % self.name
+
+class Restaurant(models.Model):
+    place = models.OneToOneField(
+        Place,
+        on_delete=models.CASCADE,
+        primary_key=True,
+    )
+    serves_hot_dogs = models.BooleanField(default=False)
+    serves_pizza = models.BooleanField(default=False)
+
+    def __str__(self):              # __unicode__ on Python 2
+        return "%s the restaurant" % self.place.name
+
+class Waiter(models.Model):
+    restaurant = models.ForeignKey(Restaurant, on_delete=models.CASCADE)
+    name = models.CharField(max_length=50)
+
+    def __str__(self):              # __unicode__ on Python 2
+        return "%s the waiter at %s" % (self.name, self.restaurant)
+```
+
++   在模型欄位的定義不可以使用pass以及多個下劃線___
+
++   要客製化FieldType可以透過以下網址去實現[Writing custom model fields.](https://docs.djangoproject.com/en/1.10/howto/custom-model-fields/)
