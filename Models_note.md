@@ -5,7 +5,7 @@
 
 +   當建立多對一的關係時會使用Foreign_key
 
-``
+```
 poll = models.ForeignKey(
     Poll,
     on_delete=models.CASCADE,
@@ -17,4 +17,4 @@ place = models.OneToOneField(
     on_delete=models.CASCADE,
     verbose_name="related place",
 )
-``
+```
