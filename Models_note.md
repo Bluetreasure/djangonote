@@ -6,15 +6,13 @@
 +   當建立多對一的關係時會使用Foreign_key
 
 ```
-poll = models.ForeignKey(
-    Poll,
-    on_delete=models.CASCADE,
-    verbose_name="the related poll",
-)
-sites = models.ManyToManyField(Site, verbose_name="list of sites")
-place = models.OneToOneField(
-    Place,
-    on_delete=models.CASCADE,
-    verbose_name="related place",
-)
+from django.db import models
+
+class Manufacturer(models.Model):
+    # ...
+    pass
+
+class Car(models.Model):
+    manufacturer = models.ForeignKey(Manufacturer, on_delete=models.CASCADE)
+    # ...
 ```
