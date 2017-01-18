@@ -166,3 +166,22 @@ class Student(CommonInfo):
     class Meta(CommonInfo.Meta):
         db_table = 'student_info'
 ```
+
+##Making Query
+
++   Model create
++   透過以下方式可以做到model新增
+
+```
+>>> from blog.models import Blog
+>>> b = Blog(name='Beatles Blog', tagline='All the latest Beatles news.')
+>>> b.save()
+```
++   要記得異動完要save()才會記錄在database
++   Model Update
+
+```
+>>> b5.name = 'New name'
+>>> b5.save()
+```
++   透過直接更新attr ,save()即可
