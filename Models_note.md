@@ -91,3 +91,47 @@ class Waiter(models.Model):
 +   在模型欄位的定義不可以使用pass以及多個下劃線___
 
 +   要客製化FieldType可以透過以下網址去實現[Writing custom model fields.](https://docs.djangoproject.com/en/1.10/howto/custom-model-fields/)
+
++   模型可以定義Meta選項，可以包含ordering,verbosename等等 實際可以參考[model option reference.](https://docs.djangoproject.com/en/1.10/ref/models/options/)
+
++   在Model 裡可以自行定義不同方法，例如根據不同資料新增的狀況取得不同訊息
+```
+from django.db import models
+
+class Person(models.Model):
+    first_name = models.CharField(max_length=50)
+    last_name = models.CharField(max_length=50)
+    birth_date = models.DateField()
+
+    def baby_boomer_status(self):
+        "Returns the person's baby-boomer status."
+        import datetime
+        if self.birth_date < datetime.date(1945, 8, 1):
+            return "Pre-boomer"
+        elif self.birth_date < datetime.date(1965, 1, 1):
+            return "Baby boomer"
+        else:
+            return "Post-boomer"
+
+    def _get_full_name(self):
+        "Returns the person's full name."
+        return '%s %s' % (self.first_name, self.last_name)
+    full_name = property(_get_full_name)
+```
+
++   Models也有一些自定義的Method ex: __str__(), __unicode__()
+
++   當我們希望改寫Models自定義的Method時，可以透過以下例子複寫
+```
+from django.db import models
+
+class Blog(models.Model):
+    name = models.CharField(max_length=100)
+    tagline = models.TextField()
+
+    def save(self, *args, **kwargs):
+        if self.name == "Yoko Ono's blog":
+            return # Yoko shall never have her own blog!
+        else:
+            super(Blog, self).save(*args, **kwargs) # Call the "real" save() method.
+```
