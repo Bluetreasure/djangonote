@@ -45,9 +45,9 @@ class CommonInfo(models.Model):
     class Meta:
         abstract = True
 ```
-    可以透過%(class)s去做到把related_name特殊化
+可以透過%(class)s去做到把related_name特殊化
     
-    這樣做之後產生的model會變成
+這樣做之後產生的model會變成
 ```
     ('create_user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='slide_bar_pic_create_user', to=settings.AUTH_USER_MODEL)),
     ('modify_user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='slide_bar_pic_modify_user', to=settings.AUTH_USER_MODEL)),
