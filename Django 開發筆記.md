@@ -23,7 +23,7 @@
     例如放在 utils 會導致在同一個app裡面的models 如果有兩個以上共用到這個class
     會發生reverse 問題 也就是related name重複
     這時候解決方法可以如下
-``
+```
 class CommonInfo(models.Model):
     # 新增日期
     create_date = models.DateTimeField(editable=False, auto_now_add=True)
@@ -44,12 +44,12 @@ class CommonInfo(models.Model):
 
     class Meta:
         abstract = True
-``
+```
     可以透過%(class)s去做到把related_name特殊化
     
     這樣做之後產生的model會變成
-``
+```
     ('create_user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='slide_bar_pic_create_user', to=settings.AUTH_USER_MODEL)),
     ('modify_user', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='slide_bar_pic_modify_user', to=settings.AUTH_USER_MODEL)),
     ('pic_slide_bar', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='pic_slide_bar', to='slide_bar.Slide_Bar')),
-``
+```
